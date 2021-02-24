@@ -1,0 +1,37 @@
+---
+- name: coletando info e processando
+  hosts: ansible-1.example.com
+  gather_facts: True
+  vars_files: vars/vars.yml
+  tasks:
+
+  - name: criando arquivo de demanda
+    template:
+      src: templates/content.j2
+      dest: files/content.txt
+
+  - name: Analisando quantidade de itens
+    set_fact:
+      num_itens: "{{ query('lines', 'cat files/content.txt') |length }}"  
+
+  - name: Validar a quantidade de items na lista
+    debug:
+      var: num_itens
+
+  - name: Criando inventory baseado na lista de servidores
+    add_host:
+      hostname: "{{ item.split(',')[0] }}"
+      groups:
+        - servidores
+    loop: "{{ query('lines', 'cat files/content.txt') | from_yaml }}"
+
+
+- name: test de acesso
+  hosts: servidores 
+  tasks:
+
+  - name: test
+    ping: 
+
+
+

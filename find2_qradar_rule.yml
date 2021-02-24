@@ -1,0 +1,32 @@
+---
+- name: Find QRadar rule state
+  hosts: qradar
+  vars:
+    qradar_rule_name: ""
+  collections:
+    - ibm.qradar
+
+  tasks:
+    - name: get info about qradar rule
+      qradar_rule_info:
+        type: "EVENT"
+      register: rule_info_event
+
+    - name: get info about qradar rule
+      qradar_rule_info:
+        type: "FLOW"
+      register: rule_info_flow
+
+    - name: get info about qradar rule
+      qradar_rule_info:
+        type: "COMMON"
+      register: rule_info_common
+
+    - name: get info about qradar rule
+      qradar_rule_info:
+        type: "USER"
+      register: rule_info_user
+
+    - name: output returned rule_info
+      debug:
+        var: rule_info_event.rules
