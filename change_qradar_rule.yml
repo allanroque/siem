@@ -1,0 +1,20 @@
+---
+- name: Change QRadar rule state
+  hosts: qradar
+  vars:
+    qradar_rule_name: ""
+    qradar_rule_state: ""
+  collections:
+    - ibm.qradar
+
+  tasks:
+    - name: get info about qradar rule
+      qradar_rule_info:
+        name: "{{ qradar_rule_name }}"
+      register: rule_info
+
+    - name: disable rule by id
+      qradar_rule:
+        state: "{{ qradar_rule_state }}"
+        id: "{{ rule_info.rules[0]['id'] }}"
+

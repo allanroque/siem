@@ -1,0 +1,17 @@
+---
+- name: Find QRadar rule state
+  hosts: qradar
+  vars:
+    qradar_rule_name: ""
+  collections:
+    - ibm.qradar
+
+  tasks:
+    - name: get info about qradar rule
+      qradar_rule_info:
+        name: "{{ qradar_rule_name }}"
+      register: rule_info
+
+    - name: output returned rule_info
+      debug:
+        var: rule_info
