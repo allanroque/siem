@@ -41,7 +41,7 @@
   - name: Reload do Rsyslog
     service:
       name: rsyslog
-      state: reloaded
+      state: restart
       enabled: yes
 
   - name: Inserir/Atualizar httpd.conf
