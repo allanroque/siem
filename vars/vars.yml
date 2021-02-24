@@ -1,5 +1,6 @@
 ---
 CONTENT_RSYSLOG: ""
+HTTPD_LOG: ""
 #conteudo das variaveis
 CONTENT: |
 

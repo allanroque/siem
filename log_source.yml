@@ -50,8 +50,7 @@
       path: /etc/httpd/conf/httpd.conf
       insertafter: "^<VirtualHost *"
       block: |
-        LogFormat "%h %l %u %t \"%r\" %>s %B \"%{Referer}i\" \"%{User-Agent}i\" \"%{JSESSIONID}C\" %T %v" qradar
-        CustomLog "|/usr/bin/logger -t httpd -p local5.info" qradar
+            "{{ HTTPD_LOG }}"
       insertbefore: "^</VirtualHost>\\s?$"
 
 
