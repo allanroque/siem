@@ -9,11 +9,11 @@
   - name: criando arquivo de demanda
     template:
       src: templates/content.j2
-      dest: /tmp/content.txt
+      dest: /opt/content.txt
 
         #  - name: Analisando quantidade de itens
         #    set_fact:
-        #      num_itens: "{{ query('lines', 'cat /tmp/content.txt') |length }}"  
+        #      num_itens: "{{ query('lines', 'cat /opt/content.txt') |length }}"  
 
   - name: Validar a quantidade de items na lista
     debug:
@@ -24,7 +24,7 @@
       hostname: "{{ item.split(',')[0] }}"
       groups:
         - servidores
-    loop: "{{ query('lines', 'cat /tmp/content.txt') | from_yaml }}"
+    loop: "{{ query('lines', 'cat /opt/content.txt') | from_yaml }}"
 
 
 - name: test de acesso
