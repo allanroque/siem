@@ -11,9 +11,9 @@
       src: templates/content.j2
       dest: /opt/content.txt
 
-        #  - name: Analisando quantidade de itens
-        #    set_fact:
-        #      num_itens: "{{ query('lines', 'cat /opt/content.txt') |length }}"  
+  - name: Analisando quantidade de itens
+    set_fact:
+      num_itens: "{{ query('lines', 'cat /opt/content.txt') |length }}"  
 
   - name: Validar a quantidade de items na lista
     debug:
@@ -27,12 +27,32 @@
     loop: "{{ query('lines', 'cat /opt/content.txt') | from_yaml }}"
 
 
-- name: test de acesso
-  hosts: servidores 
+- name: Configurando Log Source
+  hosts: servidores
+  become: True
   tasks:
 
-  - name: test
-    ping: 
+  - name: Inserir/Atualizar rsyslog.conf
+    blockinfile:
+      path: rsyslog.conf
+      block: |
+        "{{ CONTENT_RSYSLOG }}"
+        
+
+  - name: Reload do Rsyslog
+    service:
+      name: rsyslog
+      state: reloaded
+      enabled: yes
+
+  - name: Inserir/Atualizar httpd.conf
+    blockinfile:
+      path: /etc/httpd/conf/httpd.conf
+      insertafter: "^<VirtualHost *"
+      block: |
+        LogFormat "%h %l %u %t \"%r\" %>s %B \"%{Referer}i\" \"%{User-Agent}i\" \"%{JSESSIONID}C\" %T %v" qradar
+        CustomLog "|/usr/bin/logger -t httpd -p local5.info" qradar
+      insertbefore: "^</VirtualHost>\\s?$"
 
 
 
