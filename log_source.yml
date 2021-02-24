@@ -2,6 +2,7 @@
 - name: coletando info e processando
   hosts: ansible
   gather_facts: True
+  become: true
   vars_files: vars/vars.yml
   tasks:
 
