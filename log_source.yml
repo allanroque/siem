@@ -47,7 +47,7 @@
   - name: Inserir/Atualizar httpd.conf
     blockinfile:
       path: /etc/httpd/conf/httpd.conf
-      insertafter: "^<VirtualHost *"
+#      insertafter: "^<VirtualHost *"
       block: |
             "{{ HTTPD_LOG }}"
       insertbefore: "^</VirtualHost>\\s?$"
