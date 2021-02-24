@@ -34,11 +34,10 @@
 
   - name: Inserir/Atualizar rsyslog.conf
     blockinfile:
-      path: rsyslog.conf
+      path: /etc/rsyslog.conf
       block: |
         "{{ CONTENT_RSYSLOG }}"
         
-
   - name: Reload do Rsyslog
     service:
       name: rsyslog
@@ -52,6 +51,5 @@
       block: |
             "{{ HTTPD_LOG }}"
       insertbefore: "^</VirtualHost>\\s?$"
-
 
 
