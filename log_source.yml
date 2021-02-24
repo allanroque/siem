@@ -1,6 +1,6 @@
 ---
 - name: coletando info e processando
-  hosts: ansible-1.example.com
+  hosts: ansible
   gather_facts: True
   vars_files: vars/vars.yml
   tasks:
