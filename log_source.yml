@@ -9,6 +9,8 @@
     template:
       src: templates/content.j2
       dest: files/content.txt
+      ower: awx
+      group: awx
 
   - name: Analisando quantidade de itens
     set_fact:
